@@ -9,9 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ericblade/quagga2": "^1.8.4",
+    "@hookform/resolvers": "^3.9.0",
+    "axios": "^1.7.4",
+    "core-js": "^3.38.1",
     "next": "14.2.5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.52.2",
+    "uuid": "^10.0.0",
+    "yup": "^1.4.0",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@types/node": "^20",
