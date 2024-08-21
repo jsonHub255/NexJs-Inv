@@ -1,4 +1,6 @@
+// src/app/reparations/page.jsx
 "use client";
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddReparationModal from '@/components/features/AddReparationModal';
@@ -13,8 +15,8 @@ const ReparationsPage = () => {
 
   const fetchReparations = async () => {
     try {
-      const response = await axios.get('/api/reparations/');
-      setReparations(response.data);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/reparations/`);
+      setReparations(response.data.results);
     } catch (error) {
       console.error('Error fetching reparations:', error);
     }

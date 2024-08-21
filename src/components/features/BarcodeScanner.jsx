@@ -1,39 +1,52 @@
-"use client";
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Quagga from '@ericblade/quagga2';
 
-const BarcodeScanner = ({ onDetected }) => {
-  useEffect(() => {
-    Quagga.init({
-      inputStream: {
-        name: "Live",
-        type: "LiveStream",
-        target: document.querySelector('#scanner')
-      },
-      decoder: {
-        readers: ["ean_reader"]
-      }
-    }, function(err) {
-      if (err) {
-        console.log(err);
-        return
-      }
-      console.log("Initialization finished. Ready to start");
-      Quagga.start();
-    });
+const BarcodeScanner = ({ onDetected, isScannerActive }) => {
+  const scannerRef = useRef(null);
 
-    Quagga.onDetected((data) => {
-      onDetected(data.codeResult.code);
-    });
+  useEffect(() => {
+    if (isScannerActive && scannerRef.current) {
+      Quagga.init({
+        inputStream: {
+          name: "Live",
+          type: "LiveStream",
+          target: scannerRef.current,
+          constraints: {
+            width: 640,
+            height: 480,
+            facingMode: "environment", // Use the back camera on mobile devices
+          },
+        },
+        decoder: {
+          readers: ["ean_reader"]
+        }
+      }, function (err) {
+        if (err) {
+          console.error("Quagga initialization failed:", err);
+          return;
+        }
+        console.log("Quagga initialization finished. Ready to start");
+        Quagga.start();
+      });
+
+      Quagga.onDetected((data) => {
+        onDetected(data.codeResult.code);
+      });
+    }
 
     return () => {
-      Quagga.stop()
-    }
-  }, [onDetected]);
+      if (isScannerActive) {
+        Quagga.stop();
+        Quagga.offDetected(onDetected); // Remove the listener when stopping Quagga
+      }
+    };
+  }, [isScannerActive, onDetected]);
 
   return (
-    <div id="scanner" style={{width: 400, height: 300}}></div>
+    <div className="scanner-container">
+      <div ref={scannerRef} className="scanner-area"></div>
+    </div>
   );
-}
+};
 
 export default BarcodeScanner;
