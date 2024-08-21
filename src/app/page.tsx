@@ -1,18 +1,23 @@
-"use client";
-
-import React from 'react';
+import React, { useState } from 'react';
 import BarcodeScanner from '../components/features/BarcodeScanner';
 
 export default function Home() {
+  const [isScannerActive, setIsScannerActive] = useState(false);
+
   const handleDetected = (code: string) => {
-    console.log('Detected:', code);
-    // Handle the detected barcode
+    // eslint-disable-next-line no-console
+    console.log('Barcode detected:', code);
   };
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Inventory Management</h1>
-      <BarcodeScanner onDetected={handleDetected} />
+      <button onClick={() => setIsScannerActive(!isScannerActive)}>
+        {isScannerActive ? 'Deactivate Scanner' : 'Activate Scanner'}
+      </button>
+      <BarcodeScanner
+        onDetected={handleDetected}
+        isScannerActive={isScannerActive}
+      />
     </div>
   );
 }

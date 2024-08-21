@@ -13,7 +13,8 @@ interface ReparationState {
 
 export const useReparationStore = create<ReparationState>((set) => ({
   reparations: [],
-  addReparation: (reparation) => set((state) => ({ 
-    reparations: [...state.reparations, reparation] 
-  })),
+  addReparation: (reparation) =>
+    set((state) => ({
+      reparations: [...state.reparations, reparation],
+    })),
 }));

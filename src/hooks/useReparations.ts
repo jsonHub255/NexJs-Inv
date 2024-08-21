@@ -12,6 +12,7 @@ export const useReparations = () => {
         const response = await fetchReparations();
         response.data.forEach(addReparation);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Failed to fetch reparations:', error);
       }
     };

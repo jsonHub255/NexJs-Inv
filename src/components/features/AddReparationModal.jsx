@@ -4,9 +4,9 @@ import axios from 'axios';
 import styles from './AddReparationModal.module.css';
 
 // Dynamically import BarcodeScanner only when the scanner is activated
-const BarcodeScanner = dynamic(() => import('./BarcodeScanner'), { 
-  ssr: false, 
-  loading: () => <p>Loading Scanner...</p> 
+const BarcodeScanner = dynamic(() => import('./BarcodeScanner'), {
+  ssr: false,
+  loading: () => <p>Loading Scanner...</p>,
 });
 
 const AddReparationModal = ({ isOpen, onClose }) => {
@@ -31,7 +31,9 @@ const AddReparationModal = ({ isOpen, onClose }) => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/product-detail/${ean13}/`);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/product-detail/${ean13}/`,
+      );
       const product = response.data;
       const newOrderItemUsage = {
         sku: product.sku,
@@ -122,12 +124,18 @@ const AddReparationModal = ({ isOpen, onClose }) => {
           >
             {isScannerActive ? 'Deactivate Scanner' : 'Activate Scanner'}
           </button>
-          {isScannerActive && <BarcodeScanner onDetected={handleScan} isScannerActive={isScannerActive} />}
+          {isScannerActive && (
+            <BarcodeScanner
+              onDetected={handleScan}
+              isScannerActive={isScannerActive}
+            />
+          )}
           <h3>Scanned Products:</h3>
           <ul>
             {orderItemUsages.map((usage, index) => (
               <li key={index}>
-                {usage.product_name} (SKU: {usage.sku}) - Units: {usage.total_units_used}
+                {usage.product_name} (SKU: {usage.sku}) - Units:{' '}
+                {usage.total_units_used}
               </li>
             ))}
           </ul>
