@@ -73,6 +73,7 @@ const AddReparationModal = ({ isOpen, onClose }) => {
       <div className={styles.modalContent}>
         <h2>Add New Reparation</h2>
         <form onSubmit={handleSubmit}>
+          {/* Reparation Input Fields */}
           <input
             type="text"
             name="vehicle"
@@ -121,7 +122,7 @@ const AddReparationModal = ({ isOpen, onClose }) => {
           >
             {isScannerActive ? 'Deactivate Scanner' : 'Activate Scanner'}
           </button>
-          {isScannerActive && <BarcodeScanner onDetected={handleScan} />}
+          {isScannerActive && <BarcodeScanner onDetected={handleScan} isScannerActive={isScannerActive} />}
           <h3>Scanned Products:</h3>
           <ul>
             {orderItemUsages.map((usage, index) => (

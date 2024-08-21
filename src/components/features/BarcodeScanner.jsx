@@ -8,24 +8,24 @@ const BarcodeScanner = ({ onDetected, isScannerActive }) => {
     if (isScannerActive && scannerRef.current) {
       Quagga.init({
         inputStream: {
-          name: "Live",
-          type: "LiveStream",
+          name: 'Live',
+          type: 'LiveStream',
           target: scannerRef.current,
           constraints: {
             width: 640,
             height: 480,
-            facingMode: "environment", // Use the back camera on mobile devices
+            facingMode: 'environment', // Use the back camera on mobile devices
           },
         },
         decoder: {
-          readers: ["ean_reader"]
-        }
+          readers: ['ean_reader'],
+        },
       }, function (err) {
         if (err) {
-          console.error("Quagga initialization failed:", err);
+          console.error('Quagga initialization failed:', err);
           return;
         }
-        console.log("Quagga initialization finished. Ready to start");
+        console.log('Quagga initialization finished. Ready to start');
         Quagga.start();
       });
 
