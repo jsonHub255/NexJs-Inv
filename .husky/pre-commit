@@ -1,2 +1,6 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+# . "$(dirname -- "$0")/_/husky.sh"
+
+# Example command: Run lint-staged to lint and format your code
+npx lint-staged
+
